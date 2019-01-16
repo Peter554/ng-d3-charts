@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { NgD3ChartsComponent } from './ng-d3-charts.component';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 
 @NgModule({
-  declarations: [NgD3ChartsComponent],
+  declarations: [BarChartComponent],
   imports: [
   ],
-  exports: [NgD3ChartsComponent]
+  exports: [BarChartComponent]
 })
 export class NgD3ChartsModule { }
