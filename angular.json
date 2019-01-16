@@ -2,5 +2,169 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "ng-d3-charts": {
+      "root": "projects/ng-d3-charts",
+      "sourceRoot": "projects/ng-d3-charts/src",
+      "projectType": "library",
+      "prefix": "ndc",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-d3-charts/tsconfig.lib.json",
+            "project": "projects/ng-d3-charts/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-d3-charts/src/test.ts",
+            "tsConfig": "projects/ng-d3-charts/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-d3-charts/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-d3-charts/tsconfig.lib.json",
+              "projects/ng-d3-charts/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ng-d3-charts-test-app": {
+      "root": "projects/ng-d3-charts-test-app/",
+      "sourceRoot": "projects/ng-d3-charts-test-app/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ng-d3-charts-test-app",
+            "index": "projects/ng-d3-charts-test-app/src/index.html",
+            "main": "projects/ng-d3-charts-test-app/src/main.ts",
+            "polyfills": "projects/ng-d3-charts-test-app/src/polyfills.ts",
+            "tsConfig": "projects/ng-d3-charts-test-app/tsconfig.app.json",
+            "assets": [
+              "projects/ng-d3-charts-test-app/src/favicon.ico",
+              "projects/ng-d3-charts-test-app/src/assets"
+            ],
+            "styles": [
+              "projects/ng-d3-charts-test-app/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ng-d3-charts-test-app/src/environments/environment.ts",
+                  "with": "projects/ng-d3-charts-test-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ng-d3-charts-test-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ng-d3-charts-test-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ng-d3-charts-test-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-d3-charts-test-app/src/test.ts",
+            "polyfills": "projects/ng-d3-charts-test-app/src/polyfills.ts",
+            "tsConfig": "projects/ng-d3-charts-test-app/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-d3-charts-test-app/karma.conf.js",
+            "styles": [
+              "projects/ng-d3-charts-test-app/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/ng-d3-charts-test-app/src/favicon.ico",
+              "projects/ng-d3-charts-test-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-d3-charts-test-app/tsconfig.app.json",
+              "projects/ng-d3-charts-test-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ng-d3-charts-test-app-e2e": {
+      "root": "projects/ng-d3-charts-test-app-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/ng-d3-charts-test-app-e2e/protractor.conf.js",
+            "devServerTarget": "ng-d3-charts-test-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-d3-charts-test-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/ng-d3-charts-test-app-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ng-d3-charts"
 }
