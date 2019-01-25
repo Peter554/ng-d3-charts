@@ -9,7 +9,7 @@
     "copy_readme": "cp ./README.md ./dist/ng-d3-charts",
     "copy_license": "cp ./LICENSE.txt ./dist/ng-d3-charts",
     "prepare": "npm run build_lib && npm run copy_readme && npm run copy_license && npm run pack",
-    "build_docs": "ng build ng-d3-charts-test-app --prod && cp ./dist/ng-d3-charts-test-app/* ./docs"
+    "build_docs": "ng build ng-d3-charts-test-app --prod --base-href https://peter554.github.io/ng-d3-charts/ && cp ./dist/ng-d3-charts-test-app/* ./docs"
   },
   "private": true,
   "dependencies": {
