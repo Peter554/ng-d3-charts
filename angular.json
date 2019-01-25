@@ -58,9 +58,11 @@
               "projects/ng-d3-charts-demo/src/assets"
             ],
             "styles": [
-              "projects/ng-d3-charts-demo/src/styles.css"
+              "projects/ng-d3-charts-demo/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
