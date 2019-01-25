@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ng-d3-charts-test-app'`, () => {
+  it(`should have as title 'ng-d3-charts-demo'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('ng-d3-charts-test-app');
+    expect(app.title).toEqual('ng-d3-charts-demo');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to ng-d3-charts-test-app!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to ng-d3-charts-demo!');
   });
 });
