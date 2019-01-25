@@ -1,17 +1,15 @@
 {
-  "name": "ng-d3-charts-dev",
+  "name": "ng-d3-charts",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
+    "start": "ng serve ng-d3-charts-test-app",
+    "build_lib": "ng build ng-d3-charts",
+    "watch_lib": "ng build ng-d3-charts --watch",
     "pack": "cd ./dist/ng-d3-charts; npm pack",
     "copy_readme": "cp ./README.md ./dist/ng-d3-charts",
     "copy_license": "cp ./LICENSE.txt ./dist/ng-d3-charts",
-    "prepare": "npm run build && npm run copy_readme && npm run copy_license && npm run pack"
+    "prepare": "npm run build_lib && npm run copy_readme && npm run copy_license && npm run pack",
+    "build_docs": "ng build ng-d3-charts-test-app --prod && cp ./dist/ng-d3-charts-test-app/* ./docs"
   },
   "private": true,
   "dependencies": {
