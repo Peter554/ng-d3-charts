@@ -7,7 +7,7 @@
       "root": "projects/ng-d3-charts",
       "sourceRoot": "projects/ng-d3-charts/src",
       "projectType": "library",
-      "prefix": "ndc",
+      "prefix": "",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

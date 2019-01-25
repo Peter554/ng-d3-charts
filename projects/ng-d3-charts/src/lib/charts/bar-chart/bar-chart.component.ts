@@ -1,15 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as d3 from 'd3';
-import { BarChartDataItem } from '../../models/bar-chart-data-item';
+import { DataSet1D } from '../../models/DataSet1D';
 
 @Component({
-  selector: 'ndc-bar-chart',
+  selector: 'bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css']
 })
 export class BarChartComponent implements OnInit {
   @Input()
-  data: BarChartDataItem[] = [];
+  data: DataSet1D = { values: [] };
   @Input()
   width = '500px';
   @Input()
@@ -36,22 +36,21 @@ export class BarChartComponent implements OnInit {
   }
 
   render() {
-    const update = this.svg
+    this.svg
       .selectAll('rect')
-      .data(this.data)
+      .data(this.data.values)
       .enter()
       .append('rect')
       .attr('fill', this.color)
-      .attr('x', (d, i) => (i * 100) / this.data.length)
-      .attr('y', d => 100 - this.yScale(d.value))
-      .attr('width', 100 / this.data.length)
-      .attr('height', d => this.yScale(d.value));
+      .attr('x', (d, i) => (i * 100) / this.data.values.length)
+      .attr('y', d => 100 - this.yScale(d))
+      .attr('width', 100 / this.data.values.length)
+      .attr('height', d => this.yScale(d));
   }
 
   buildScaleY() {
-    const values = this.data.map(d => d.value);
-    const minValue = Math.min(...values);
-    const maxValue = Math.max(...values);
+    const minValue = Math.min(...this.data.values);
+    const maxValue = Math.max(...this.data.values);
     this.yScale = d3
       .scaleLinear()
       .domain([0, maxValue])
