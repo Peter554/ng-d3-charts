@@ -6,4 +6,4 @@ export * from './lib/ng-d3-charts.module';
 
 export * from './lib/charts/bar-chart/bar-chart.component';
 
-export * from './lib/models/DataSet1D';
+export * from './lib/models/Dataset1D';

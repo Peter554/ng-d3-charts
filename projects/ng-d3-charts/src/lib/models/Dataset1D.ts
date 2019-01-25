@@ -1,4 +1,4 @@
-export interface DataSet1D {
+export interface Dataset1D {
     values: number[];
     label?: string;
 }

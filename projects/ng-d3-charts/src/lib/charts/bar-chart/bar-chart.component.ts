@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as d3 from 'd3';
-import { DataSet1D } from '../../models/DataSet1D';
+import { Dataset1D } from '../../models/Dataset1D';
 
 @Component({
   selector: 'bar-chart',
@@ -9,7 +9,7 @@ import { DataSet1D } from '../../models/DataSet1D';
 })
 export class BarChartComponent implements OnInit {
   @Input()
-  data: DataSet1D = { values: [] };
+  data: Dataset1D = { values: [] };
   @Input()
   width = '500px';
   @Input()
