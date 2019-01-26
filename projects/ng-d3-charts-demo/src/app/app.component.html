@@ -1,8 +1,31 @@
 <div class="container mt-3">
   <div class="jumbotron">
         <h1 class="display-4">ng-d3-charts</h1>
-        <p class="lead">Angular charts using d3</p>
+        <p class="lead">
+          Angular charts built using d3. 
+        </p>        
+        <div>
+            <a href="https://github.com/Peter554/ng-d3-charts" class="btn btn-primary">
+              Find me on GitHub
+            </a>
+        </div>
   </div>
 
-  <bar-chart [data]="data" color="#336" width="500px" height="300px"></bar-chart>
+  <h2>Install</h2>
+  <pre>
+npm install d3
+npm install ng-d3-charts</pre>
+
+  <h2>Bar Chart</h2>
+
+  <h3>Data</h3>
+  <pre>
+data = [10, 15, 8, 25, 19];
+labels = ['France', 'England', 'Mexico', 'China', 'Brazil'];</pre>
+
+  <h3>HTML</h3>
+  <pre>
+{{ html }}</pre>
+
+  <bar-chart [data]="data" [labels]="labels" color="#e0e" width="600" height="500"></bar-chart>
 </div>

@@ -1,4 +1,4 @@
 export interface Dataset1D {
     values: number[];
-    label?: string;
+    datasetLabel?: string;
 }
