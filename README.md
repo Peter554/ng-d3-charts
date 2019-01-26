@@ -1,3 +1,5 @@
 # NgD3Charts
 
-Angular charts in d3.
+Angular charts built using d3.
+
+https://peter554.github.io/ng-d3-charts
