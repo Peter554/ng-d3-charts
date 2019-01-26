@@ -36,6 +36,12 @@ export class BarChartComponent implements OnInit, OnChanges {
   // On changes also fires on construction before ngOnInit!
   ngOnChanges() {
     if (this.componentIsNew) {
+      const availableWidth = document.getElementById('bar-chart').clientWidth;
+      if (this.width > availableWidth) {
+        this.width = availableWidth;
+        this.height = this.height * availableWidth / this.width;
+      }
+
       this.padding = Math.min(this.width, this.height) / 10;
 
       this.buildXScale();
