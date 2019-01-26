@@ -92,17 +92,6 @@ export class BarChartComponent implements OnChanges {
       .style('font-size', '1rem')
       .style('font-family', 'Arial')
       .attr('transform', `translate(${this.padding}, 0)`);
-
-    this.tooltip = d3.select('body')
-      .append('div')
-      .style('position', 'absolute')
-      .style('opacity', 0)
-      .style('padding', '0.4rem')
-      .style('border-radius', '0.2rem')
-      .style('pointer-events', 'none')
-      .style('background-color', '#eee')
-      .style('font-size', '1rem')
-      .style('font-family', 'Arial');
   }
 
   setTitle() {
@@ -148,20 +137,7 @@ export class BarChartComponent implements OnChanges {
         .attr('x', (d, i) => this.xScale((i + 0.1) / this.data.length))
         .attr('width', (d, i) => this.xScale((i + 0.9) / this.data.length) - this.xScale((i + 0.1) / this.data.length))
         .attr('y', d => this.height - this.padding)
-        .attr('height', 0)
-        .on('mousemove', (d) => {
-          this.tooltip
-            .text(d)
-            .style('left', `${d3.event.pageX}px`)
-            .style('top', `${d3.event.pageY - 1.1 * this.tooltip.node().clientHeight}px`)
-            .style('opacity', 1)
-            .style('transition', 'opacity 200ms');
-
-        })
-        .on('mouseout', () => {
-          this.tooltip
-            .style('opacity', 0);
-        });
+        .attr('height', 0);
 
       this.plotNode
         .selectAll('rect')
@@ -197,7 +173,7 @@ export class BarChartComponent implements OnChanges {
     const minValue = Math.min(...this.data);
     const maxValue = Math.max(...this.data);
     this.yScale = d3.scaleLinear()
-      .domain([Math.min(0, minValue), Math.max(0, maxValue)])
+      .domain([0, maxValue])
       .range([this.height - this.padding, this.padding]);
   }
 
