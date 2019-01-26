@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,7 +6,7 @@ import * as d3 from 'd3';
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css']
 })
-export class BarChartComponent implements OnInit, OnChanges {
+export class BarChartComponent implements OnChanges {
   @Input()
   data: number[] = [];
   @Input()
@@ -16,80 +16,90 @@ export class BarChartComponent implements OnInit, OnChanges {
   @Input()
   height = 600;
   @Input()
-  color = '#772953';
+  color = '#e0e';
+  @Input()
+  title = '';
 
-  componentIsNew = true;
+  firstChange = true;
 
-  padding;
-  barPadding;
   svg;
+  padding;
   yScale;
   xScale;
   colorScale;
   yAxis;
 
-  constructor() {}
-
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.firstChange) {
+      this.firstChange = false;
+      this.buildSvg();
+      if (this.data.length > 0) {
+        this.prepareChart();
+        this.updateChart();
+      }
+    } else if (changes.labels
+      || (changes.data && (changes.data.previousValue.length !== changes.data.currentValue.length))
+    ) {
+      this.svg.selectAll('*').remove();
+      this.prepareChart();
+      this.updateChart();
+    } else {
+      this.updateChart();
+    }
   }
 
-  // On changes also fires on construction before ngOnInit!
-  ngOnChanges() {
-    if (this.componentIsNew) {
-      const availableWidth = document.getElementById('bar-chart').clientWidth;
-      if (this.width > availableWidth) {
-        this.width = availableWidth;
-        this.height = this.height * availableWidth / this.width;
-      }
-
-      this.padding = Math.min(this.width, this.height) / 10;
-
-      this.buildXScale();
-      this.buildColorScale();
-
-      this.svg = d3
-        .select('#bar-chart')
-        .append('svg')
-        .attr('width', `${this.width}px`)
-        .attr('height', `${this.height}px`)
-        .attr('viewBox', `0 0 ${this.width} ${this.height}`);
-
-      this.svg
-        .selectAll('rect')
-        .data(this.data)
-        .enter()
-        .append('rect')
-        .attr('fill', (d, i) => this.colorScale(i))
-        .attr('x', (d, i) => this.xScale((i + 0.1) / this.data.length))
-        .attr('width', (d, i) => this.xScale((i + 0.9) / this.data.length) - this.xScale((i + 0.1) / this.data.length))
-        .attr('y', d => this.height - this.padding)
-        .attr('height', 0);
-
-      this.yAxis = this.svg.append('g')
-        .style('font-size', '1rem')
-        .style('font-family', 'Arial')
-        .attr('transform', `translate(${this.padding}, 0)`);
-
-
-      this.svg
-        .selectAll('text')
-        .data(this.labels)
-        .enter()
-        .append('text')
-        .text(d => d)
-        .attr('x', (d, i) => (this.xScale((i) / this.data.length) + this.xScale((i + 1) / this.data.length)) / 2)
-        .attr('y', this.height - 0.5 * this.padding)
-        .attr('text-anchor', 'middle')
-        .style('font-size', '1rem')
-        .style('font-family', 'Arial');
-
-      this.componentIsNew = false;
+  prepareChart() {
+    const availableWidth = document.getElementById('bar-chart').clientWidth;
+    if (this.width > availableWidth) {
+      this.width = availableWidth;
+      this.height = this.height * availableWidth / this.width;
     }
 
-    this.update();
+    this.padding = Math.min(this.width, this.height) / 10;
+
+    this.buildXScale();
+    this.buildColorScale();
+
+    this.svg
+      .selectAll('rect')
+      .data(this.data)
+      .enter()
+      .append('rect')
+      .attr('fill', (d, i) => this.colorScale(i))
+      .attr('x', (d, i) => this.xScale((i + 0.1) / this.data.length))
+      .attr('width', (d, i) => this.xScale((i + 0.9) / this.data.length) - this.xScale((i + 0.1) / this.data.length))
+      .attr('y', d => this.height - this.padding)
+      .attr('height', 0);
+
+    this.yAxis = this.svg.append('g')
+      .style('font-size', '1rem')
+      .style('font-family', 'Arial')
+      .attr('transform', `translate(${this.padding}, 0)`);
+
+    this.svg
+      .selectAll('text')
+      .data(this.labels)
+      .enter()
+      .append('text')
+      .text((d, i) => i < this.data.length ? d : '')
+      .attr('x', (d, i) => (this.xScale((i) / this.data.length) + this.xScale((i + 1) / this.data.length)) / 2)
+      .attr('y', this.height - 0.5 * this.padding)
+      .attr('text-anchor', 'middle')
+      .style('font-size', '1rem')
+      .style('font-family', 'Arial');
+
+    this.svg
+      .append('text')
+      .text(this.title)
+      .attr('text-anchor', 'middle')
+      .style('font-size', '1.2rem')
+      .style('font-weight', 'bold')
+      .style('font-family', 'Arial')
+      .attr('x', this.width / 2)
+      .attr('y', 0.5 * this.padding);
   }
 
-  update() {
+  updateChart() {
     this.buildYScale();
 
     const yAxis = d3.axisLeft(this.yScale);
@@ -102,6 +112,15 @@ export class BarChartComponent implements OnInit, OnChanges {
       .duration(1000)
       .attr('y', d => this.yScale(d))
       .attr('height', d => this.height - this.padding -  this.yScale(d));
+  }
+
+  buildSvg() {
+    this.svg = d3
+      .select('#bar-chart')
+      .append('svg')
+      .attr('width', `${this.width}px`)
+      .attr('height', `${this.height}px`)
+      .attr('viewBox', `0 0 ${this.width} ${this.height}`);
   }
 
   buildYScale() {
