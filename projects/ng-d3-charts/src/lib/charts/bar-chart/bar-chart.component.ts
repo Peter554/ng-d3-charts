@@ -8,47 +8,67 @@ import * as d3 from 'd3';
 })
 export class BarChartComponent implements OnChanges {
   @Input()
-  data: number[] = [];
-  @Input()
-  labels: string[] = [];
-  @Input()
   width = 800;
   @Input()
   height = 600;
+  @Input()
+  data: number[] = [];
+  @Input()
+  labels: string[] = [];
   @Input()
   color = '#e0e';
   @Input()
   title = '';
 
-  firstChange = true;
-
   svg;
   padding;
-  yScale;
-  xScale;
-  colorScale;
-  yAxis;
+  firstChange = true;
+  tooltip;
 
+  titleNode;
+  labelsNode;
+  plotNode;
+  yAxisNode;
+
+  xScale;
+  yScale;
+  colorScale;
+
+  // ToDo what about default values?
   ngOnChanges(changes: SimpleChanges) {
     if (this.firstChange) {
-      this.firstChange = false;
       this.buildSvg();
-      if (this.data.length > 0) {
-        this.prepareChart();
-        this.updateChart();
-      }
-    } else if (changes.labels
-      || (changes.data && (changes.data.previousValue.length !== changes.data.currentValue.length))
-    ) {
-      this.svg.selectAll('*').remove();
-      this.prepareChart();
-      this.updateChart();
+
+      this.buildXScale();
+      this.buildYScale();
+      this.buildColorScale();
+
+      this.setTitle();
+      this.setLabels();
+      this.plotData();
+
+      this.firstChange = false;
     } else {
-      this.updateChart();
+      this.buildXScale();
+      this.buildYScale();
+      this.buildColorScale();
+
+      this.setTitle();
+      this.setLabels();
+
+      if (changes.color) {
+        this.plotData();
+      } else if (changes.data) {
+        if (changes.data.previousValue && (changes.data.previousValue.length !== changes.data.currentValue.length)) {
+          this.plotData();
+        } else {
+          this.updateData();
+        }
+      }
     }
   }
 
-  prepareChart() {
+  buildSvg() {
     const availableWidth = document.getElementById('bar-chart').clientWidth;
     if (this.width > availableWidth) {
       this.width = availableWidth;
@@ -57,38 +77,37 @@ export class BarChartComponent implements OnChanges {
 
     this.padding = Math.min(this.width, this.height) / 10;
 
-    this.buildXScale();
-    this.buildColorScale();
+    this.svg = d3
+      .select('#bar-chart')
+      .append('svg')
+      .attr('width', `${this.width}px`)
+      .attr('height', `${this.height}px`)
+      .attr('viewBox', `0 0 ${this.width} ${this.height}`);
 
-    this.svg
-      .selectAll('rect')
-      .data(this.data)
-      .enter()
-      .append('rect')
-      .attr('fill', (d, i) => this.colorScale(i))
-      .attr('x', (d, i) => this.xScale((i + 0.1) / this.data.length))
-      .attr('width', (d, i) => this.xScale((i + 0.9) / this.data.length) - this.xScale((i + 0.1) / this.data.length))
-      .attr('y', d => this.height - this.padding)
-      .attr('height', 0);
+    this.titleNode = this.svg.append('g');
+    this.labelsNode = this.svg.append('g');
+    this.plotNode = this.svg.append('g');
 
-    this.yAxis = this.svg.append('g')
+    this.yAxisNode = this.svg.append('g')
       .style('font-size', '1rem')
       .style('font-family', 'Arial')
       .attr('transform', `translate(${this.padding}, 0)`);
 
-    this.svg
-      .selectAll('text')
-      .data(this.labels)
-      .enter()
-      .append('text')
-      .text((d, i) => i < this.data.length ? d : '')
-      .attr('x', (d, i) => (this.xScale((i) / this.data.length) + this.xScale((i + 1) / this.data.length)) / 2)
-      .attr('y', this.height - 0.5 * this.padding)
-      .attr('text-anchor', 'middle')
+    this.tooltip = d3.select('body')
+      .append('div')
+      .style('position', 'absolute')
+      .style('opacity', 0)
+      .style('padding', '0.4rem')
+      .style('border-radius', '0.2rem')
+      .style('pointer-events', 'none')
+      .style('background-color', '#eee')
       .style('font-size', '1rem')
       .style('font-family', 'Arial');
+  }
 
-    this.svg
+  setTitle() {
+    this.titleNode.selectAll('*').remove();
+    this.titleNode
       .append('text')
       .text(this.title)
       .attr('text-anchor', 'middle')
@@ -99,28 +118,79 @@ export class BarChartComponent implements OnChanges {
       .attr('y', 0.5 * this.padding);
   }
 
-  updateChart() {
-    this.buildYScale();
-
-    const yAxis = d3.axisLeft(this.yScale);
-    this.yAxis.call(yAxis);
-
-    this.svg
-      .selectAll('rect')
-      .data(this.data)
-      .transition()
-      .duration(1000)
-      .attr('y', d => this.yScale(d))
-      .attr('height', d => this.height - this.padding -  this.yScale(d));
+  setLabels() {
+    this.labelsNode.selectAll('*').remove();
+    this.labelsNode
+      .selectAll('text')
+      .data(this.labels)
+      .enter()
+      .append('text')
+      .text((d, i) => i < this.data.length ? d : '')
+      .attr('text-anchor', 'middle')
+      .style('font-size', '1rem')
+      .style('font-family', 'Arial')
+      .attr('x', (d, i) => (this.xScale((i) / this.data.length) + this.xScale((i + 1) / this.data.length)) / 2)
+      .attr('y', this.height - 0.5 * this.padding);
   }
 
-  buildSvg() {
-    this.svg = d3
-      .select('#bar-chart')
-      .append('svg')
-      .attr('width', `${this.width}px`)
-      .attr('height', `${this.height}px`)
-      .attr('viewBox', `0 0 ${this.width} ${this.height}`);
+  plotData() {
+    this.plotNode.selectAll('*').remove();
+    if (this.data.length > 0) {
+      this.buildXScale();
+      this.buildYScale();
+
+      this.plotNode
+        .selectAll('rect')
+        .data(this.data)
+        .enter()
+        .append('rect')
+        .attr('fill', (d, i) => this.colorScale(i))
+        .attr('x', (d, i) => this.xScale((i + 0.1) / this.data.length))
+        .attr('width', (d, i) => this.xScale((i + 0.9) / this.data.length) - this.xScale((i + 0.1) / this.data.length))
+        .attr('y', d => this.height - this.padding)
+        .attr('height', 0)
+        .on('mousemove', (d) => {
+          this.tooltip
+            .text(d)
+            .style('left', `${d3.event.pageX}px`)
+            .style('top', `${d3.event.pageY - 1.1 * this.tooltip.node().clientHeight}px`)
+            .style('opacity', 1)
+            .style('transition', 'opacity 200ms');
+
+        })
+        .on('mouseout', () => {
+          this.tooltip
+            .style('opacity', 0);
+        });
+
+      this.plotNode
+        .selectAll('rect')
+        .data(this.data)
+        .transition()
+        .duration(1000)
+        .attr('y', d => this.yScale(d))
+        .attr('height', d => this.height - this.padding -  this.yScale(d));
+
+      this.yAxisNode.call(d3.axisLeft(this.yScale));
+    }
+  }
+
+  updateData() {
+    this.plotNode
+    .selectAll('rect')
+    .data(this.data)
+    .transition()
+    .duration(1000)
+    .attr('y', d => this.yScale(d))
+    .attr('height', d => this.height - this.padding -  this.yScale(d));
+
+    this.yAxisNode.call(d3.axisLeft(this.yScale));
+  }
+
+  buildXScale() {
+    this.xScale = d3.scaleLinear()
+      .domain([0, 1])
+      .range([this.padding, this.width - this.padding]);
   }
 
   buildYScale() {
@@ -129,12 +199,6 @@ export class BarChartComponent implements OnChanges {
     this.yScale = d3.scaleLinear()
       .domain([Math.min(0, minValue), Math.max(0, maxValue)])
       .range([this.height - this.padding, this.padding]);
-  }
-
-  buildXScale() {
-    this.xScale = d3.scaleLinear()
-      .domain([0, 1])
-      .range([this.padding, this.width - this.padding]);
   }
 
   buildColorScale() {

@@ -1,3 +1,11 @@
 #bar-chart {
     text-align: center;
 }
+
+.tooltip {
+    font-size: 1rem;
+    font-family: Arial;
+    position: absolute ;
+    padding: 1rem;
+    background-color: blue;
+}
