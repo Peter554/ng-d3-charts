@@ -37,7 +37,10 @@ export class BarChartDemoComponent implements OnInit {
   title = '';
   color = '';
 
-  html = `<bar-chart [data]="data" [labels]="labels" color="#e0e" width="600" height="500" title="My Bar Chart"></bar-chart>`;
+  exampleCode = `data = [10, 15, 8, 25, 19];
+labels = ['France', 'England', 'Mexico', 'China', 'Brazil'];
+
+<bar-chart [data]="data" [labels]="labels" color="#e0e" title="My Bar Chart"></bar-chart>`;
 
   ngOnInit(): void {
     setTimeout(() => {

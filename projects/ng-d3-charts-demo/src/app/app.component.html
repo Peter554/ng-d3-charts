@@ -1,40 +1,43 @@
 <div class="container mt-3">
   <div class="jumbotron">
+    <div class="row" style="align-items: flex-end">
+      <div class="col-sm-8">  
         <h1 class="display-4">ng-d3-charts</h1>
-        <p class="lead">
-          Angular charts built using d3. 
-        </p>        
+        <p class="lead">Angular charts built using d3.</p>
         <div>
-            <a href="https://github.com/Peter554/ng-d3-charts" class="btn btn-primary">
-              Find me on GitHub
-            </a>
+          <a href="https://github.com/Peter554/ng-d3-charts" class="btn btn-primary"> Find me on GitHub | <i class="fas fa-star"></i> </a>
         </div>
+      </div>
+      <div class="col-sm-4">
+        <app-logo></app-logo>
+      </div>
+    </div>
   </div>
 
-  <ul>
-    <li><a href="#bar-chart-demo">Bar Chart</a></li>
-    <li><a href="#scatter-chart-demo">Scatter Chart</a></li>
-  </ul>
+  <div class="card card-body">
+    <h2>Charts</h2>
+    <ul>
+      <li><a href="#bar-chart-demo">Bar Chart <i class="fas fa-link"></i></a></li>
+      <li><a href="#scatter-chart-demo">Scatter Chart <i class="fas fa-link"></i></a></li>
+    </ul>
 
-  <h2>Install</h2>
-  <pre>
+    <h2>Install</h2>
+    <pre>
 npm install d3
-npm install ng-d3-charts</pre>
+npm install ng-d3-charts</pre
+    >
 
-  <h2>Chart Properties</h2>
-  <ul>
-    <li>All properties are optional.</li>
-    <li>The following two syntaxes are equally valid:</li>
-  </ul>
-
-  <pre>
-  {{ html1 }}</pre>
-
-  <pre>
-  {{ html2 }}</pre>
-
+    <h2>Chart Inputs</h2>
+    <ul>
+      <li>All inputs are optional. Sensible defaults are provided in most cases.</li>
+      <li>The following two syntaxes are equally valid:</li>
+    </ul>
+    <pre>
+{{ html1 }}</pre>
+    <pre>
+{{ html2 }}</pre>
+  </div>
 
   <app-bar-chart-demo id="bar-chart-demo"></app-bar-chart-demo>
   <app-scatter-chart-demo id="scatter-chart-demo"></app-scatter-chart-demo>
-
 </div>

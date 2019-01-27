@@ -23,7 +23,9 @@ export class ScatterChartDemoComponent implements OnInit {
   dataCounter = 0;
   colorCounter = 0;
 
-  html = `<scatter-chart [data]="data" width="600" height="500" title="My Scatter Chart" xLabel="Score A" yLabel="Score B" color="#e0e"></scatter-chart>`;
+  exampleCode = `data = [[-3, 1], [-2, 4], [-1, 6], [0, 2], [1, 0], [2, -1], [3, 1], [4, 2], [5, 4], [6, 3]];
+
+<scatter-chart [data]="data" title="My Scatter Chart" xLabel="Score A" yLabel="Score B" color="#e0e"></scatter-chart>`;
 
   constructor() { }
 

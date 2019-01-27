@@ -1,11 +1,68 @@
-<h2>Bar Chart</h2>
-<bar-chart [data]="data" [labels]="labels" width="600" height="500" [title]="title" [color]="color"></bar-chart>
+<div class="card card-body mt-3">
+  <h2>Bar Chart</h2>
+  <bar-chart [data]="data" [labels]="labels" [title]="title" [color]="color"></bar-chart>
 
-<h3>Data</h3>
-<pre>
-data = [10, 15, 8, 25, 19];
-labels = ['France', 'England', 'Mexico', 'China', 'Brazil'];</pre>
+  <div>
+    <button class="btn btn-primary mr-3" type="button" data-toggle="collapse" data-target="#barChartDemoCode">
+      Example Code | <i class="fas fa-chevron-circle-down"></i>
+    </button>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#barChartInputs">
+        @Inputs | <i class="fas fa-chevron-circle-down"></i>
+      </button>
+  </div>
 
-<h3>HTML</h3>
-<pre>
-{{ html }}</pre>
+  <div class="collapse" id="barChartDemoCode">
+<pre class="my-3">{{ exampleCode }}</pre>
+  </div>
+
+  <div class="collapse" id="barChartInputs">
+    <table class="table my-3">
+        <thead>
+          <tr>
+            <th scope="col">@Input</th>
+            <th scope="col">Type</th>
+            <th scope="col">Description</th>
+            <th scope="col">Default Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>data</td>
+            <td>number[ ]</td>
+            <td>The data values</td>
+            <td>[ ]</td>
+          </tr>
+          <tr>
+            <td>labels</td>
+            <td>string[ ]</td>
+            <td>The data labels</td>
+            <td>[ ]</td>
+          </tr>
+          <tr>
+            <td>title</td>
+            <td>string</td>
+            <td>The chart title</td>
+            <td>' '</td>
+          </tr>
+          <tr>
+            <td>color</td>
+            <td>string (hex)</td>
+            <td>The color theme</td>
+            <td>'#e0e'</td>
+          </tr>
+          <tr>
+            <td>width</td>
+            <td>number</td>
+            <td>The chart max-width in px</td>
+            <td>600</td>
+          </tr>
+          <tr>
+            <td>height</td>
+            <td>number</td>
+            <td>The chart max-height in px</td>
+            <td>500</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>

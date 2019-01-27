@@ -8,9 +8,9 @@ import * as d3 from 'd3';
 })
 export class BarChartComponent implements OnChanges {
   @Input()
-  width = 800;
+  width = 600;
   @Input()
-  height = 600;
+  height = 500;
   @Input()
   data: number[] = [];
   @Input()
@@ -91,8 +91,7 @@ export class BarChartComponent implements OnChanges {
     this.plotNode = this.svg.append('g');
 
     this.yAxisNode = this.svg.append('g')
-      .style('font-size', '1rem')
-      .style('font-family', 'Arial')
+    .style('font-size', '1rem')
       .attr('transform', `translate(${this.padding}, 0)`);
   }
 
@@ -104,7 +103,6 @@ export class BarChartComponent implements OnChanges {
       .attr('text-anchor', 'middle')
       .style('font-size', '1.2rem')
       .style('font-weight', 'bold')
-      .style('font-family', 'Arial')
       .attr('x', this.width / 2)
       .attr('y', 0.5 * this.padding);
   }
@@ -119,7 +117,6 @@ export class BarChartComponent implements OnChanges {
       .text((d, i) => i < this.data.length ? d : '')
       .attr('text-anchor', 'middle')
       .style('font-size', '1rem')
-      .style('font-family', 'Arial')
       .attr('x', (d, i) => (this.xScale((i) / this.data.length) + this.xScale((i + 1) / this.data.length)) / 2)
       .attr('y', this.height - 0.5 * this.padding);
   }

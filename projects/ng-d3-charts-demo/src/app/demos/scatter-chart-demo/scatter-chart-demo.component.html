@@ -1,10 +1,84 @@
-<h2>Scatter Chart</h2>
-<scatter-chart [data]="data" width="600" height="500" [title]="title"  xLabel="Score A" yLabel="Score B" [color]="color"></scatter-chart>
+<div class="card card-body mt-3">
+  <h2>Scatter Chart</h2>
+  <scatter-chart
+    [data]="data"
+    [title]="title"
+    xLabel="Score A"
+    yLabel="Score B"
+    [color]="color"
+  ></scatter-chart>
 
-<h3>Data</h3>
-<pre>
-data = [[-3, 1], [-2, 4], [-1, 6], [0, 2], [1, 0], [2, -1], [3, 1], [4, 2], [5, 4], [6, 3]];</pre>
+  <div>
+      <button class="btn btn-primary mr-3" type="button" data-toggle="collapse" data-target="#scatterChartDemoCode">
+        Example Code | <i class="fas fa-chevron-circle-down"></i>
+      </button>
+      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#scatterChartInputs">
+          @Inputs | <i class="fas fa-chevron-circle-down"></i>
+        </button>
+  </div>
 
-<h3>HTML</h3>
-<pre>
-{{ html }}</pre>
+    <div class="collapse" id="scatterChartDemoCode">
+<pre class="my-3">{{ exampleCode }}</pre>
+    </div>
+
+    <div class="collapse" id="scatterChartInputs">
+        <table class="table my-3">
+            <thead>
+              <tr>
+                <th scope="col">@Input</th>
+                <th scope="col">Type</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>data</td>
+                <td>number[ ][ ]</td>
+                <td>The data values</td>
+                <td>[ ]</td>
+              </tr>
+              <tr>
+                <td>title</td>
+                <td>string</td>
+                <td>The chart title</td>
+                <td>' '</td>
+              </tr>
+              <tr>
+                <td>xLabel</td>
+                <td>string</td>
+                <td>The x-axis label</td>
+                <td>' '</td>
+              </tr>
+              <tr>
+                <td>yLabel</td>
+                <td>string</td>
+                <td>The y-axis label</td>
+                <td>' '</td>
+              </tr>
+              <tr>
+                <td>color</td>
+                <td>string (hex)</td>
+                <td>The color theme</td>
+                <td>'#e0e'</td>
+              </tr>
+              <tr>
+                <td>width</td>
+                <td>number</td>
+                <td>The chart max-width in px</td>
+                <td>600</td>
+              </tr>
+              <tr>
+                <td>height</td>
+                <td>number</td>
+                <td>The chart max-height in px</td>
+                <td>500</td>
+              </tr>
+              <tr>
+                <td>pointSize</td>
+                <td>number</td>
+                <td>The point size</td>
+                <td>6</td>
+              </tr>
+            </tbody>
+          </table>
+</div>

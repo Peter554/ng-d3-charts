@@ -8,9 +8,9 @@ import * as d3 from 'd3';
 })
 export class ScatterChartComponent implements OnChanges {
   @Input()
-  width = 800;
+  width = 600;
   @Input()
-  height = 600;
+  height = 500;
   @Input()
   data: number[][] = [];
   @Input()
@@ -96,12 +96,10 @@ export class ScatterChartComponent implements OnChanges {
 
     this.xAxisNode = this.svg.append('g')
     .style('font-size', '1rem')
-    .style('font-family', 'Arial')
     .attr('transform', `translate(0, ${this.height - this.padding})`);
 
     this.yAxisNode = this.svg.append('g')
       .style('font-size', '1rem')
-      .style('font-family', 'Arial')
       .attr('transform', `translate(${this.padding}, 0)`);
   }
 
@@ -113,7 +111,6 @@ export class ScatterChartComponent implements OnChanges {
       .attr('text-anchor', 'middle')
       .style('font-size', '1.2rem')
       .style('font-weight', 'bold')
-      .style('font-family', 'Arial')
       .attr('x', this.width / 2)
       .attr('y', 0.5 * this.padding);
   }
@@ -125,7 +122,6 @@ export class ScatterChartComponent implements OnChanges {
       .text(this.xLabel)
       .attr('text-anchor', 'middle')
       .style('font-size', '1rem')
-      .style('font-family', 'Arial')
       .attr('x', this.width / 2)
       .attr('y', this.height - 0.2 * this.padding);
   }
@@ -139,7 +135,7 @@ export class ScatterChartComponent implements OnChanges {
     .attr('font-size', '1rem')
     .attr('transform', `rotate(-90)`)
     .attr('x', -this.height / 2)
-    .attr('y', 0.2 * this.padding);
+    .attr('y', 0.4 * this.padding);
   }
 
   plotData() {

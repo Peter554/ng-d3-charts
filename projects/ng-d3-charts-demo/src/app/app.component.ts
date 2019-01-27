@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  html1 = '<bar-chart data="[1, 2, 3, 4]"></bar-chart>';
-  html2 = `myData = [1, 2, 3, 4];
-  <bar-chart [data]="myData"></bar-chart>`;
+  html1 = '<bar-chart title="My Bar Chart"></bar-chart>';
+  html2 = `title = 'My Bar Chart';
+<bar-chart [title]="title"></bar-chart>`;
 }
