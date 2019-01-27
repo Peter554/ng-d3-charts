@@ -21,6 +21,8 @@ export class ScatterChartComponent implements OnChanges {
   xLabel = '';
   @Input()
   yLabel = '';
+  @Input()
+  pointSize = 6;
 
   @ViewChild('scatterChart')
   scatterChart: ElementRef;
@@ -151,7 +153,7 @@ export class ScatterChartComponent implements OnChanges {
         .attr('fill', this.color)
         .attr('cx', (d, i) => this.xScale(d[0]))
         .attr('cy', d => this.height - this.padding)
-        .attr('r', (this.width + this.height) / 80000);
+        .attr('r', this.pointSize);
 
       this.plotNode
         .selectAll('circle')
