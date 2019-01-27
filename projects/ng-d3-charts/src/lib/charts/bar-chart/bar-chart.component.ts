@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -20,6 +20,9 @@ export class BarChartComponent implements OnChanges {
   @Input()
   title = '';
 
+  @ViewChild('barChart')
+  barChart: ElementRef;
+
   svg;
   padding;
   firstChange = true;
@@ -34,7 +37,6 @@ export class BarChartComponent implements OnChanges {
   yScale;
   colorScale;
 
-  // ToDo what about default values?
   ngOnChanges(changes: SimpleChanges) {
     if (this.firstChange) {
       this.buildSvg();
@@ -69,7 +71,7 @@ export class BarChartComponent implements OnChanges {
   }
 
   buildSvg() {
-    const availableWidth = document.getElementById('bar-chart').clientWidth;
+    const availableWidth = this.barChart.nativeElement.clientWidth;
     if (this.width > availableWidth) {
       this.width = availableWidth;
       this.height = this.height * availableWidth / this.width;
@@ -78,7 +80,7 @@ export class BarChartComponent implements OnChanges {
     this.padding = Math.min(this.width, this.height) / 10;
 
     this.svg = d3
-      .select('#bar-chart')
+      .select(this.barChart.nativeElement)
       .append('svg')
       .attr('width', `${this.width}px`)
       .attr('height', `${this.height}px`)
@@ -125,9 +127,6 @@ export class BarChartComponent implements OnChanges {
   plotData() {
     this.plotNode.selectAll('*').remove();
     if (this.data.length > 0) {
-      this.buildXScale();
-      this.buildYScale();
-
       this.plotNode
         .selectAll('rect')
         .data(this.data)
@@ -170,7 +169,6 @@ export class BarChartComponent implements OnChanges {
   }
 
   buildYScale() {
-    const minValue = Math.min(...this.data);
     const maxValue = Math.max(...this.data);
     this.yScale = d3.scaleLinear()
       .domain([0, maxValue])

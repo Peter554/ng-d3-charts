@@ -11,21 +11,30 @@
         </div>
   </div>
 
+  <ul>
+    <li><a href="#bar-chart-demo">Bar Chart</a></li>
+    <li><a href="#scatter-chart-demo">Scatter Chart</a></li>
+  </ul>
+
   <h2>Install</h2>
   <pre>
 npm install d3
 npm install ng-d3-charts</pre>
 
-  <h2>Bar Chart</h2>
-  <bar-chart [data]="data" [labels]="labels" width="600" height="500" [title]="title" [color]="color"></bar-chart>
+  <h2>Chart Properties</h2>
+  <ul>
+    <li>All properties are optional.</li>
+    <li>The following two syntaxes are equally valid:</li>
+  </ul>
 
-  <h3>Data</h3>
   <pre>
-data = [10, 15, 8, 25, 19];
-labels = ['France', 'England', 'Mexico', 'China', 'Brazil'];</pre>
+  {{ html1 }}</pre>
 
-  <h3>HTML</h3>
   <pre>
-{{ html }}</pre>
+  {{ html2 }}</pre>
+
+
+  <app-bar-chart-demo id="bar-chart-demo"></app-bar-chart-demo>
+  <app-scatter-chart-demo id="scatter-chart-demo"></app-scatter-chart-demo>
 
 </div>
